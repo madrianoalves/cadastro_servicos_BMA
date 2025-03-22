@@ -1,0 +1,17 @@
+{
+    "name": "meu-app",
+    "version": "1.0.0",
+    "description": "Sistema de cadastro de serviços",
+    "main": "server/app.js",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "express": "^4.21.2",
+        "fs": "^0.0.1-security",
+        "mongoose": "^8.12.2",
+        "path": "^0.12.7"
+    },
+    "scripts": {
+        "start": "node server/app.js"
+    }
+}
