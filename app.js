@@ -1,27 +1,31 @@
-// Importa o Express
+require('dotenv').config(); // Carrega variáveis de ambiente
 const express = require('express');
-const path = require('path');
+const cors = require('cors');
 
-// Cria a instância do servidor Express
 const app = express();
+const port = process.env.PORT || 3000; // Usa a porta definida no .env ou 3000 por padrão
 
-// Define a porta onde o servidor vai rodar
-const port = 3000;
+// Middleware
+app.use(express.json()); // Processa JSON no corpo das requisições
+app.use(cors()); // Permite requisições de diferentes origens
 
-// Configura o diretório onde o arquivo index.html está localizado
-const publicDirectoryPath = path.join(__dirname, 'public');
-
-// Serve os arquivos estáticos da pasta 'public'
-app.use(express.static(publicDirectoryPath));
-
-// Cria a rota para a página inicial
+// Rota principal
 app.get('/', (req, res) => {
-  res.sendFile(path.join(publicDirectoryPath, 'index.html'));
+    res.status(200).json({ message: '✅ Servidor rodando corretamente!' });
 });
 
-// Inicia o servidor na porta 3000
+// Middleware de erro (captura exceções)
+app.use((err, req, res, next) => {
+    console.error('❌ Erro no servidor:', err);
+    
+    if (!res.headersSent) { // Evita múltiplas respostas
+        res.status(500).json({ message: 'Erro interno no servidor' });
+    }
+});
+
+// Inicia o servidor
 app.listen(port, () => {
-  console.log(`Servidor rodando em http://localhost:${port}`);
+    console.log(`🚀 Servidor rodando em http://localhost:${port}`);
 });
 
 
